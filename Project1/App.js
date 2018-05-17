@@ -1,17 +1,44 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {Component} from 'react';
+import { StyleSheet, AppRegistry, Text, ScrollView, SectionList, Button, Alert,
+  TextInput, View, ActivityIndicator } from 'react-native';
 
-export default class App extends React.Component {
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {name: ''};
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
+        <Button
+          onPress={() => {
+            fetch('https://justinwu.000webhostapp.com/testjson.json')
+              .then((response) => response.json())
+              .then((responseJson) => {
+
+                this.setState({
+                  name: responseJson.name,
+                }, function(){
+
+                });
+
+              })
+              .catch((error) => {
+                console.error(error);
+              })
+          }}
+          title="Press to refresh"
+        />
+        <Text>{this.state.name}</Text>
       </View>
     );
   }
 }
+
+// skip this line if using Create React Native App
+AppRegistry.registerComponent('AwesomeProject', () => PizzaTranslator);
+
 
 const styles = StyleSheet.create({
   container: {
@@ -20,4 +47,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+  red: {
+    color: 'red'
+  }
 });
