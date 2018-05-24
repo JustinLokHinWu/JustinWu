@@ -14,7 +14,7 @@ class HomeScreen extends React.Component {
       <View style={styles.container}>
         <FlatList
           data={[
-            {key: 'First', text: "Lorem ipsum some text", date: "5/23/2018"},
+            {key: 'First', text: "Hey this is some text", date: "5/23/2018"},
             {key: 'Second', text: "Some other ipsum some text", date: "5/23/2018"},
             {key: 'Third', text: "Some text", date: "5/23/2018"},
             {key: 'Fourth', text: "Testing a very long message that should take up multiple lines and is probably going to break the UI", date: "5/23/2018"},
@@ -40,14 +40,15 @@ class ListItem extends React.Component {
   render() {
     return(
       <View style={styles.listItem}>
-        <View style={{width: "93%"}}>
-          <View style={{flex: 1, flexDirection: 'row', alignItems: 'baseline'}}>
-            <Text style={styles.headerText}>{this.state.title}</Text>
-            <Text numberOfLines={1} style={styles.paragraphText}>{" - " + this.state.date}</Text>
+        <View style={{flexDirection: 'row'}}>
+          <View>
+            <View style={{flex: 1, flexDirection: 'row', alignItems: 'baseline'}}>
+              <Text style={styles.headerText}>{this.state.title}</Text>
+              <Text style={styles.paragraphText}>{" - " + this.state.date}</Text>
+            </View>
           </View>
-          <Text style={styles.paragraphText}>{this.state.text}</Text>
         </View>
-        <Button title='Delete'/>
+        <Text numberOfLines={1} style={styles.paragraphText}>{this.state.text}</Text>
       </View>
     )
   }
@@ -80,21 +81,20 @@ const styles = StyleSheet.create({
   listItem: {
     backgroundColor: '#eee',
     flex: 1,
-    flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
-    paddingVertical: 5,
+    paddingVertical: 8,
     borderBottomColor: '#999',
     borderBottomWidth: 1,
-    width: "86%"
   },
   headerText: {
-    color: '#333',
-    fontSize: 20,
+    //color: '#333',
+    color: '#3b64de',
+    fontSize: 22,
   },
   paragraphText: {
     color: '#444',
-    fontSize: 12,
+    fontSize: 14,
   }
 
 });
