@@ -2,24 +2,18 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, FlatList, Button } from 'react-native';
 import { stackManager, createStackNavigator } from 'react-navigation'
 
-
 class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'Notes',
   }
-
-
   render() {
     return (
       <View style={styles.container}>
+        <Text>{notes.notes.title}</Text>
         <FlatList
-          data={[
-            {key: 'First', text: "Hey this is some text", date: "5/23/2018"},
-            {key: 'Second', text: "Some other ipsum some text", date: "5/23/2018"},
-            {key: 'Third', text: "Some text", date: "5/23/2018"},
-            {key: 'Fourth', text: "Testing a very long message that should take up multiple lines and is probably going to break the UI", date: "5/23/2018"},
-          ]}
-          renderItem={({item}) => <ListItem title={item.key} text={item.text} date={item.date}/>}
+          data={notes}
+
+          renderItem={({item}) => <ListItem title={item.notes.title} text={item.notes.text} date={item.notes.date}/>}
         />
       </View>
     )
@@ -44,7 +38,7 @@ class ListItem extends React.Component {
           <View>
             <View style={{flex: 1, flexDirection: 'row', alignItems: 'baseline'}}>
               <Text style={styles.headerText}>{this.state.title}</Text>
-              <Text style={styles.paragraphText}>{" - " + this.state.date}</Text>
+              <Text numberOfLines={1} style={styles.paragraphText}>{" - " + this.state.date}</Text>
             </View>
           </View>
         </View>
@@ -63,9 +57,20 @@ const RootStack = createStackNavigator(
   }
 );
 
+function loadNotes() {
+  //return require('./notes.json')
+  return {"notes": [{
+    "title": "Some title 1",
+    "date": "05/23/18",
+    "text": "This is a paragraph with some shit in it"
+  }]};
+}
+
 export default class App extends React.Component {
+  notes = loadNotes();
+
   render() {
-    return <RootStack />
+    return <RootStack notes={notes}/>
   }
 }
 
