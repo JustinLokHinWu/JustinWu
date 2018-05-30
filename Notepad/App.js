@@ -6,14 +6,18 @@ class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'Notes',
   }
+
+
   render() {
+    var notes = loadNotes();
+
     return (
       <View style={styles.container}>
-        <Text>{notes.notes.title}</Text>
+        //<Text>{notes.list}</Text>
         <FlatList
           data={notes}
 
-          renderItem={({item}) => <ListItem title={item.notes.title} text={item.notes.text} date={item.notes.date}/>}
+          renderItem={({item}) => <ListItem title={item.title} text={item.text} date={item.date}/>}
         />
       </View>
     )
@@ -59,18 +63,17 @@ const RootStack = createStackNavigator(
 
 function loadNotes() {
   //return require('./notes.json')
-  return {"notes": [{
+  return {list: [
     "title": "Some title 1",
     "date": "05/23/18",
     "text": "This is a paragraph with some shit in it"
-  }]};
+  ]};
 }
 
 export default class App extends React.Component {
-  notes = loadNotes();
 
   render() {
-    return <RootStack notes={notes}/>
+    return <RootStack/>
   }
 }
 
