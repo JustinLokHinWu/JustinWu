@@ -2,13 +2,13 @@
   "name": "electronfirst",
   "version": "1.0.0",
   "description": "An Electron app",
-  "main": "index.js",
+  "main": "main.js",
   "dependencies": {
     "electron": "^2.0.2"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron ."
   },
   "author": "",
   "license": "ISC"
