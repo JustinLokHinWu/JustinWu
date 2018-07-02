@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Processing Calculator</title>
+    <script src="processing.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <ul id="navbar">
+        <li id="navitem"><a href="index.html">Home</a></li>
+        <li id="navitem"><a href="processing.html">Processing Calculator</a></li>
+    </ul>
+
+    <h1>Processing Calculator</h1>
+    <p>This calculator assumes +3 processing clothes and P2W maid costume.</p>
+
+    <hr>
+
+    Material type:<br>
+    <select id="materialtype">
+        <option value="timber">Timber</option>
+        <option value="plank">Plank</option>
+        <option value="ore">Ore (minus zinc)</option>
+        <option value="zinc">Zinc Ore</option>
+        <option value="alloy">Alloy</option>
+    </select><br>
+
+    Starting weight:<br>
+    <input type="text" id="startweight" value=0><br>
+    Max weight:<br>
+    <input type="text" id="maxweight" value=1440><br>
+    Item quantity:<br>
+    <input type="text" id="itemquantity" value=10000><br>
+    
+    Alchemy stone (14%)
+    <input type="checkbox" id="alchstone">
+    Couscous:
+    <input type="checkbox" id="couscous"><br>
+
+    <button type="button" onclick="startTimer()">Start timer</button>
+    
+    <p id="p1"></p>
+
+    <p id="p2"></p>
+
+    <audio src="resources/alarm.wav" autostart="0" width="0" height="0" id="finishsound" enablejavascript="true">
+</body>
+
+<footer>
+    <p>Some copyright shit here</p>
+</footer>
