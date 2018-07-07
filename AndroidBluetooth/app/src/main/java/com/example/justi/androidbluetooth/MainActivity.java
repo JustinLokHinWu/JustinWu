@@ -1,11 +1,9 @@
 package com.example.justi.androidbluetooth;
 
 import android.Manifest;
-import android.bluetooth.BluetoothServerSocket;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -16,17 +14,11 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Set;
-import java.util.List;
 import android.content.Context;
 import android.content.IntentFilter;
 
@@ -34,10 +26,6 @@ import static android.bluetooth.BluetoothAdapter.*;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
     private final static String TAG = "SelectActivity";
-    private final static int REQUEST_ENABLE_BT = 1;
-
-    //private ArrayList<BluetoothDevice> devices = new ArrayList<BluetoothDevice>();
-    //private ArrayList<String> devices = new ArrayList<String>();
 
     BluetoothAdapter mBluetoothAdapter;
     Button buttonDiscover;
@@ -84,7 +72,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             if(action.equals(BluetoothDevice.ACTION_FOUND)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                if (!mDevices.contains(device) && device.getName().equals("iPhone")) {
+
+                // TODO change device filter to use something other than name
+                if (!mDevices.contains(device) && device.getName().equals("raspberrypi")) {
                     mDevices.add(device);
                     Log.d(TAG, "onReceive: " + device.getName() + " : " + device.getAddress());
 
