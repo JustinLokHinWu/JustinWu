@@ -6,6 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <View
+        android:id="@+id/view"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textDeviceAddr"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textDeviceName"
         android:layout_width="wrap_content"
@@ -14,7 +24,8 @@
         android:layout_marginTop="8dp"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Name" />
 
     <TextView
         android:id="@+id/textDeviceAddr"
@@ -26,7 +37,8 @@
         app:layout_constraintEnd_toEndOf="@+id/textDeviceName"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textDeviceName" />
+        app:layout_constraintTop_toBottomOf="@+id/textDeviceName"
+        tools:text="Address" />
 
     <TextView
         android:id="@+id/textDeviceBonded"
@@ -38,6 +50,7 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/textDeviceAddr"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Status" />
 
 </android.support.constraint.ConstraintLayout>
