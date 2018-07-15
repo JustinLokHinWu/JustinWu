@@ -1,41 +1,40 @@
-# file: rfcomm-server.py
-# auth: Albert Huang <albert@csail.mit.edu>
-# desc: simple demonstration of a server application that uses RFCOMM sockets
-#
-# $Id: rfcomm-server.py 518 2007-08-10 07:20:07Z albert $
+# based on: l2capclient.py, a Demo L2CAP server for pybluez, written 2007-08-15 04:04:52Z albert
 
-from bluetooth import *
+import bluetooth
+import json
 
-server_sock=BluetoothSocket( RFCOMM )
-server_sock.bind(("",PORT_ANY))
+server_sock=bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+port = 1
+
+server_sock.bind(("",port))
 server_sock.listen(1)
 
-port = server_sock.getsockname()[1]
+#uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ef"
+#bluetooth.advertise_service( server_sock, "SampleServerL2CAP",
+#                   service_id = uuid,
+#                   service_classes = [ uuid ]
+#                    )
+print("Waiting for connection...")
+client_sock,address = server_sock.accept()
+print("Accepted connection from ",address)
 
-uuid = "94f39d29-7d6d-437d-973b-fba39e49d4ee"
+data = client_sock.recv(1024)
+print("Data received: ", str(data))
 
-advertise_service( server_sock, "SampleServer",
-                   service_id = uuid,
-                   service_classes = [ uuid, SERIAL_PORT_CLASS ],
-                   profiles = [ SERIAL_PORT_PROFILE ], 
-#                   protocols = [ OBEX_UUID ] 
-                    )
-                   
-print("Waiting for connection on RFCOMM channel %d" % port)
+while data:
+    # client_sock.send('Echo => ' + str(data))
+    # this is where data is processed
+    print("Notification received.")
 
-client_sock, client_info = server_sock.accept()
-print("Accepted connection from ", client_info)
+    notif_data = json.loads(data)
+    print("Package: " + notif_data["package"])
+    print("Title: " + notif_data["title"])
+    print("Text: " + notif_data["text"])
 
-try:
-    while True:
-        data = client_sock.recv(1024)
-        if len(data) == 0: break
-        print("received [%s]" % data)
-except IOError:
-    pass
-
-print("disconnected")
+    
+    # receive next message
+    data = client_sock.recv(1024)
+    print("Data received:", str(data))
 
 client_sock.close()
 server_sock.close()
-print("all done")
