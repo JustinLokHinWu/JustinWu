@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import java.nio.charset.Charset;
 import java.util.UUID;
 
 import static android.bluetooth.BluetoothAdapter.ERROR;
@@ -26,6 +27,12 @@ public class Main extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        // for checking permissions
+        /*Intent notificationIntent = new Intent(
+                "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");*/
+        //startActivity(notificationIntent);
     }
 
     public void buttonNavigateToScan(View view) {

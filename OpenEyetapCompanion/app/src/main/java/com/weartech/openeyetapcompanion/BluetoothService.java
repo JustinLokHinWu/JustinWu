@@ -26,7 +26,7 @@ public class BluetoothService {
     ProgressDialog mProgressDialog;
 
     // Threads
-    private AcceptThread mAcceptThread;
+    //private AcceptThread mAcceptThread;
     private ConnectThread mConnectThread;
     private ConnectedThread mConnectedThread;
 
@@ -38,6 +38,7 @@ public class BluetoothService {
         start();
     }
 
+    /*
     private class AcceptThread extends Thread {
         private BluetoothServerSocket mServerSocket;
 
@@ -64,11 +65,12 @@ public class BluetoothService {
 
                 Log.d(TAG,"Connection accepted");
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.d(TAG, "Connection failed");
             }
 
             if(socket != null) {
                 // TODO
+                Log.d(TAG, "Conntected...");
                 connected(socket, mDevice);
             }
         }
@@ -84,27 +86,32 @@ public class BluetoothService {
             }
         }
     }
+    */
 
     private class ConnectThread extends Thread {
-        private BluetoothSocket mSocket;
+        private final BluetoothSocket mSocket;
 
         public ConnectThread(BluetoothDevice device, UUID uuid) {
             Log.d(TAG, "Starting ConnectThread");
 
             mDevice = device;
             deviceUUID = uuid;
-        }
 
-        public void run() {
             BluetoothSocket tmp = null;
 
             try {
-                tmp = mDevice.createRfcommSocketToServiceRecord(deviceUUID);
-            } catch (IOException e) {
+                tmp = mDevice.createRfcommSocketToServiceRecord(mDevice.getUuids()[0].getUuid());
+            }
+            catch (IOException e) {
                 e.printStackTrace();
             }
 
             mSocket = tmp;
+            Log.d(TAG, deviceUUID.toString());
+        }
+
+        public void run() {
+            Log.d(TAG, "Running Connect Thread");
 
             mBluetoothAdapter.cancelDiscovery();
 
@@ -119,6 +126,7 @@ public class BluetoothService {
                 }
                 e.printStackTrace();
                 Log.d(TAG, "Connection failed");
+                return;
             }
 
             connected(mSocket, mDevice);
@@ -162,6 +170,7 @@ public class BluetoothService {
         }
 
         public void run() {
+            Log.d(TAG, "Running Connected Thread");
             byte[] buffer = new byte[1024];
 
             int bytes;
@@ -204,14 +213,17 @@ public class BluetoothService {
         Log.d(TAG, "Start");
 
         if (mConnectThread != null) {
+            Log.d(TAG, "ConnectThread exists, terminating");
             mConnectThread.cancel();
             mConnectThread = null;
         }
 
+        /*
         if(mAcceptThread == null) {
+            Log.d(TAG, "ConnectThread doesn't exist, starting");
             mAcceptThread = new AcceptThread();
             mAcceptThread.start();
-        }
+        }*/
     }
 
     public void startClient(BluetoothDevice device, UUID uuid) {

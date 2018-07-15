@@ -1,11 +1,19 @@
 package com.weartech.openeyetapcompanion;
 
 import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.nio.charset.Charset;
 import java.util.UUID;
@@ -42,6 +50,8 @@ public class Device extends AppCompatActivity {
         mBluetoothService = new BluetoothService(Device.this);
 
         startConnection();
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(notificationReceiver, new IntentFilter("Msg"));
     }
 
     public void startBluetoothConnection(BluetoothDevice device, UUID uuid) {
@@ -57,4 +67,27 @@ public class Device extends AppCompatActivity {
     public void buttonPingDevice(View view) {
         mBluetoothService.write("This is a test!".getBytes(Charset.defaultCharset()));
     }
+
+    // based on code written by mukesh, 19/5/15
+    private BroadcastReceiver notificationReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "Forwarding notification to Bluetooth");
+            String notifTitle = intent.getStringExtra("title");
+            String notifText = intent.getStringExtra("text");
+            String notifPackage = intent.getStringExtra("package");
+
+
+            JSONObject notification = new JSONObject();
+            try {
+                notification.put("title", notifTitle);
+                notification.put("text", notifText);
+                notification.put("package", notifPackage);
+            } catch (JSONException e) {
+                Log.d(TAG, "Failed to package JSON object");
+            }
+
+            mBluetoothService.write(notification.toString().getBytes(Charset.defaultCharset()));
+        }
+    };
 }

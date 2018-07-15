@@ -122,10 +122,12 @@ public class Scan extends AppCompatActivity implements AdapterView.OnItemClickLi
 
         device.createBond();
 
-        // Switch to device activity
-        Intent intent = new Intent(this, Device.class);
-        intent.putExtra("BT_DEVICE", device);
-        startActivity(intent);
+        if(device.getBondState() == BluetoothDevice.BOND_BONDED) {
+            // Switch to device activity
+            Intent intent = new Intent(this, Device.class);
+            intent.putExtra("BT_DEVICE", device);
+            startActivity(intent);
+        }
     }
 
     @Override
