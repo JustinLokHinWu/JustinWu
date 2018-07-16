@@ -25,8 +25,9 @@ while data:
     # client_sock.send('Echo => ' + str(data))
     # this is where data is processed
     print("Notification received.")
+    json_string = data.decode("utf-8")
 
-    notif_data = json.loads(data)
+    notif_data = json.loads(json_string)
     print("Package: " + notif_data["package"])
     print("Title: " + notif_data["title"])
     print("Text: " + notif_data["text"])
