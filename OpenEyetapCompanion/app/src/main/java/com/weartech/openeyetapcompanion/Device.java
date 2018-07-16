@@ -89,6 +89,7 @@ public class Device extends AppCompatActivity {
             String notifTitle = intent.getStringExtra("title");
             String notifPackage = intent.getStringExtra("package");
             String notifText = intent.getStringExtra("text");
+
             sendMessage(notifTitle, notifPackage, notifText);
         }
     };
