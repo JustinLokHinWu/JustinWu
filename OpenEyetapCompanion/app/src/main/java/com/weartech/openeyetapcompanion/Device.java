@@ -65,7 +65,20 @@ public class Device extends AppCompatActivity {
     }
 
     public void buttonPingDevice(View view) {
-        mBluetoothService.write("This is a test!".getBytes(Charset.defaultCharset()));
+        sendMessage("Ping Test", "Open Eyetap Companion", "This is a test ping");
+    }
+
+    private void sendMessage(String title, String pack, String text) {
+        JSONObject notification = new JSONObject();
+        try {
+            notification.put("title", title);
+            notification.put("package", pack);
+            notification.put("text", text);
+        } catch (JSONException e) {
+            Log.d(TAG, "Failed to package JSON object");
+        }
+
+        mBluetoothService.write(notification.toString().getBytes(Charset.defaultCharset()));
     }
 
     // based on code written by mukesh, 19/5/15
@@ -74,20 +87,9 @@ public class Device extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "Forwarding notification to Bluetooth");
             String notifTitle = intent.getStringExtra("title");
-            String notifText = intent.getStringExtra("text");
             String notifPackage = intent.getStringExtra("package");
-
-
-            JSONObject notification = new JSONObject();
-            try {
-                notification.put("title", notifTitle);
-                notification.put("text", notifText);
-                notification.put("package", notifPackage);
-            } catch (JSONException e) {
-                Log.d(TAG, "Failed to package JSON object");
-            }
-
-            mBluetoothService.write(notification.toString().getBytes(Charset.defaultCharset()));
+            String notifText = intent.getStringExtra("text");
+            sendMessage(notifTitle, notifPackage, notifText);
         }
     };
 }
