@@ -4,10 +4,12 @@ import bluetooth
 import json
 
 class BluetoothServer:
-    server_sock=bluetooth.BluetoothSocket(bluetooth.RFCOMM)
-    port = 1
+    
 
     def __init__(self):
+        server_sock=bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+        port = 1
+
         server_sock.bind(("",port))
         server_sock.listen(1)
 
